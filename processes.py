@@ -73,7 +73,7 @@ class FileExistenceChecker(ExistenceChecker):
     def _load(self) -> None:
         self._files = []
         for file_type in self._file_types:
-            self._files.extend(glob.glob(self._folder + f"/**/*.{file_type}", recursive=True))
+            self._files.extend(os.path.basename(x) for x in glob.glob(self._folder + f"/**/*.{file_type}", recursive=True))
         self._loaded = True
         return
 
@@ -82,7 +82,7 @@ class FileExistenceChecker(ExistenceChecker):
             self._load()
         # TODO DRY
         basename = os.path.basename(filename)
-        thumbfile = os.path.join(self._folder, "tn_" + basename)
+        thumbfile = "tn_" + basename
 
         return thumbfile in self._files
 
