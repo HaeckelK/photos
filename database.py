@@ -4,6 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
 from sqlalchemy.orm import relationship, sessionmaker
+from sqlalchemy.schema import UniqueConstraint
 
 
 Base = declarative_base()
@@ -34,6 +35,9 @@ class Photo(Base, TimestampMixin):
     id = Column(Integer, primary_key=True)
     source = Column(String)
     filename = Column(String)
+
+    __table_args__ = (UniqueConstraint('source', 'filename', name='_source_filename_uc'),
+                     )
 
 
 class Thumbnail(Base, TimestampMixin):
@@ -74,7 +78,7 @@ class PhotoNote(Base, TimestampMixin):
     photo = relationship('Photo')
 
 
-# Base.metadata.create_all(Database().engine)
+Base.metadata.create_all(Database.engine)
 # Session = sessionmaker(bind=Database().engine)
 # session = Session()
 
