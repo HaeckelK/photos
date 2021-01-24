@@ -104,6 +104,7 @@ def create_thumbnails(
     existence_checker: ExistenceChecker,
     thumb_recorder: ThumbnailRecorder,
 ) -> None:
+    """"""
     print("Process: create_thumbnails")
     raw_files = selector.select()
     count = len(raw_files)
@@ -115,4 +116,19 @@ def create_thumbnails(
             continue
         thumb_file = thumb_creator.create(raw_file)
         thumb_recorder.record(raw_file, thumb_file)
+    return
+
+
+# TODO should be photo selector.
+def import_photos(source: str, selector: PhotoFileSelector) -> None:
+    """Log photos in a directory into database.
+    
+    Parameters
+    ----------
+    source: str
+        Name of source of photos e.g. iphone
+    selector: PhotoFileSelector
+        Logic holder that returns list of file names.
+    """
+    
     return
